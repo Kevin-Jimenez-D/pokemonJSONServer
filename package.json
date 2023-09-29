@@ -1,0 +1,16 @@
+{
+  "name": "pokemonjsonserver",
+  "version": "1.0.0",
+  "description": "**Autor:**",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "json-server --watch db.json"
+  },
+  "keywords": [],
+  "author": "Kevin Johan Jimenez Delgado",
+  "license": "ISC",
+  "devDependencies": {
+    "json-server": "0.17.4"
+  }
+}

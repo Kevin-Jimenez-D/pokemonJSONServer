@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal@4/minimal.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <!--Correr con open with live server-->
+    <script src="main.js" defer type="module"></script>
+</head>
+<body>
+    <div>
+        <button id="pokeapiMockapi" disabled="disabled">pokeapiMockapi</button>
+    </div>
+    <div>
+        <button id="vistaPrevia">Pokemones existentes mockapi</button>
+        <button id="myPikachu">Vista previa Pokemon</button>
+        <input type="text" id="pokemonActual" placeholder="Nombre Pokemon vista previa">
+    </div>
+    <div>
+        <button id="buscarPokemon">Buscar pokemon</button>
+        <input type="text" id="nombrePokemon" placeholder="Escribe nombre pokemon">
+        <button id="pokemones" disabled="disabled">Editar Pokemones</button>
+    </div>
+    <div>
+        <button id="eliminarPokemon">Eliminar pokemon</button>
+        <input type="text" id="eliminarNombrePokemon" placeholder="Eliminar nombre pokemon">
+    </div>
+    
+</body>
+</html>
