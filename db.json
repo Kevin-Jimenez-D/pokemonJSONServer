@@ -1,5 +1,88 @@
 {
-  "pokemonesPokeApi":["Esto"],
-  "pokemonesJSONServer":["Es"],
-  "pokemones":["Prueba"]   
+  "pokemonesPokeApi": [
+    [
+      {
+        "name": "bulbasaur",
+        "hp": 100,
+        "attack": 49,
+        "defense": 49,
+        "special-attack": 65,
+        "special-defense": 65,
+        "speed": 100,
+        "id": "1"
+      },
+      {
+        "name": "venusaur",
+        "hp": 80,
+        "attack": 82,
+        "defense": 83,
+        "special-attack": 100,
+        "special-defense": 100,
+        "speed": 80,
+        "id": "3"
+      },
+      {
+        "name": "charmander",
+        "hp": 39,
+        "attack": 52,
+        "defense": 43,
+        "special-attack": 60,
+        "special-defense": 50,
+        "speed": 65,
+        "id": "4"
+      },
+      {
+        "name": "charmeleon",
+        "hp": 58,
+        "attack": 64,
+        "defense": 58,
+        "special-attack": 80,
+        "special-defense": 65,
+        "speed": 80,
+        "id": "5"
+      },
+      {
+        "name": "charizard",
+        "hp": 78,
+        "attack": 84,
+        "defense": 78,
+        "special-attack": 100,
+        "special-defense": 85,
+        "speed": 100,
+        "id": "6"
+      },
+      {
+        "name": "squirtle",
+        "hp": 44,
+        "attack": 48,
+        "defense": 65,
+        "special-attack": 50,
+        "special-defense": 64,
+        "speed": 43,
+        "id": "7"
+      },
+      {
+        "name": "wartortle",
+        "hp": 59,
+        "attack": 63,
+        "defense": 80,
+        "special-attack": 65,
+        "special-defense": 80,
+        "speed": 58,
+        "id": "8"
+      },
+      {
+        "name": "blastoise",
+        "hp": 79,
+        "attack": 83,
+        "defense": 100,
+        "special-attack": 85,
+        "special-defense": 105,
+        "speed": 78,
+        "id": "9"
+      }
+    ]
+  ],
+  "pokemonesJSONServer": [],
+  "pokemones": []
 }
