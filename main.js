@@ -123,3 +123,85 @@ document.querySelector("#vistaPrevia").addEventListener("click", async () => {
         Swal.fire("Error", "Error al procesar la solicitud.", "error");
     }
 });
+
+
+
+
+//Evento para traer los datos de un pokemon de acuerdo a su nombre y se vea la carta
+//Mismo nombre de la variable que en el HTML para no confundirme
+let myPikachu = document.querySelector("#myPikachu");
+
+myPikachu.addEventListener("click", async()=>{
+
+
+    // Obtén el nombre del Pokémon ingresado por el usuario, elimina espacios en blanco al inicio y final y coloca la palabra en minuscula
+    const pokemonName = document.querySelector("#pokemonActual").value.trim().toLowerCase();
+
+    // Verifica si el Pokémon ya existe en la base de datos de JSON Server
+    const mockapiUrl = "http://localhost:3000/pokemonesJSONServer";
+    const response = await fetch(mockapiUrl);
+    const pokemonData = await response.json();
+
+    // Busca el Pokémon en los datos de MockAPI, la vuelvo minuscula en la appi y miro si son iguales
+    const foundPokemon = pokemonData.find((pokemon) => pokemon.name.toLowerCase() === pokemonName);
+
+    //Trae todo el objeto que se ve en el JSON Server
+    //console.log(foundPokemon);
+
+    if (foundPokemon) {
+        //document.querySelector("#pokemones").dataset.pokemonId = foundPokemon.id;
+        //console.log("Encontrado")
+        //console.log(foundPokemon.id)
+        //Extraer su id
+        // Obtén la ID del Pokémon almacenada en el botón
+        //const pokemonId = document.querySelector("#pokemones").dataset.pokemonId;
+        //const mockapiUrl = `https://6512485eb8c6ce52b3957baa.mockapi.io/pokemon/${pokemonId}`;
+
+
+    //De la pagina "https://pokeapi.co/" por defecto aparece pokemon y en /ditto se coloca pikachu
+    //Traiga la peticion, por ejemplo 202, lo convierte a JSON y traiga esos datos
+    //Son 1017 pokemons
+    //let res= await (await fetch("https://pokeapi.co/api/v2/pokemon/pikachu")).json();
+    //El objeto encontrado con el id del pokemon, solo me interesa el id para manipular la url
+    let res= await (await fetch(`https://pokeapi.co/api/v2/pokemon/${foundPokemon.id}`)).json();
+    //En la pagina "https://pokeapi.co/" se va al apartado sprites -> front_default -> la imagen del pokemon
+    let img= res.sprites.front_default;
+    //EN caso de alguna falla, me carga esta imagen sacada de la src de la imagen encontrada en Google
+    let defaultImg = "https://media.tenor.com/OPhGGLtFqLQAAAAC/pokeball.gif";
+
+    //console.log(resMockApi);
+
+    // lo del swal es lo de la página "https://sweetalert2.github.io/"
+    Swal.fire({
+        //Del objeto del data base en JSON solo obtengo ell nombre
+        title: `${foundPokemon.name}`,
+        text: 'Modal with a custom image.',
+        
+        //Donde aparece el ? es un condiciona, si la imagen aparece la coloca, sino coloca la de por default
+        imageUrl: `${(img) ? img:defaultImg}`,
+        html:
+        //Para acceder a propiedades con nombres que contienen guiones, debes utilizar la notación de corchetes
+        // en lugar de la notación de punto. Aquí está cómo puedes hacerlo:
+        `<p>id:${foundPokemon.id}</p>`+
+        `<p>name:${foundPokemon.name}</p>`+
+        `<p>hp:${foundPokemon.hp}</p>`+
+        `<p>attack:${foundPokemon.attack}</p>`+
+        `<p>defense:${foundPokemon.defense}</p>`+        
+        `<p>special-attack:${foundPokemon["special-attack"]}</p>`+
+        `<p>special-defense:${foundPokemon["special-defense"]}</p>`+
+        `<p>speed:${foundPokemon.speed}</p>`,
+        //Imagenes al 80%
+        imageWidth: "80%",
+        imageHeight: "80%",
+      })
+        
+      
+
+    } else {
+        // Si no se encuentra el Pokémon, muestra un mensaje de error
+        //console.log("No encontrado")
+        Swal.fire("Error", `No se encontró ningún Pokémon con el nombre "${pokemonName}" en la base de datos.`, "error");
+    }
+
+
+})
