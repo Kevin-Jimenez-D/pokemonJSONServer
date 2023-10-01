@@ -23,7 +23,7 @@ traerMockApi();
 
 
 //Enviar los datos de pokeapi a JSONServer
-//OJO, esto solo se debe hacer una vez sino se genera errores
+//OJO, esto solo se debe hacer una vez sino se genera errores, por eso lo desabilito
 let pokeapiMockapi = document.querySelector("#pokeapiMockapi");
 
 pokeapiMockapi.addEventListener("click",async()=>
@@ -96,3 +96,30 @@ pokeapiMockapi.addEventListener("click",async()=>
     }
 
 })
+
+
+
+
+//Los datos de los pokemones que se veran en la consola
+document.querySelector("#vistaPrevia").addEventListener("click", async () => {
+    // URL de la API MockAPI a donde se enviaran
+    const JSONServer = "http://localhost:3000/pokemonesJSONServer";
+
+    try {
+        // Realiza una solicitud GET para obtener todos los Pokémon desde JSON Server
+        const response = await fetch(JSONServer);
+        //Para entrar internamente a los datos de JSONServer
+        const pokemonData = await response.json();
+
+        // Itera a través de los Pokémon y muestra los nombres en la consola y por defecto me saca el nombre o name
+        pokemonData.forEach((pokemon) => {
+            console.log(pokemon.name);
+        });
+
+        // Muestra un mensaje de éxito en Swal.fire
+        Swal.fire("Éxito", "Nombres de Pokémon mostrados en la consola.", "success");
+    } catch (error) {
+        // En caso de error, muestra un mensaje de error en Swal.fire
+        Swal.fire("Error", "Error al procesar la solicitud.", "error");
+    }
+});
