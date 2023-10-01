@@ -258,6 +258,12 @@ pokemones.addEventListener("click",async()=>{
     //Trae todo el objeto que se ve en el JSON Server
     //console.log(foundPokemon);
 
+    //Con esto obtengo las llaves de todos mis elementos para colocarlos dinamicamente
+    const arrayPrueba=Object.keys(foundPokemon)
+
+    //Obtengo por ejemplo el del primer id
+    //console.log(arrayPrueba[0]);
+
     if (foundPokemon) {
     //De la pagina "https://pokeapi.co/" por defecto aparece pokemon y en /ditto se coloca pikachu
     //Traiga la peticion, por ejemplo 202, lo convierte a JSON y traiga esos datos
@@ -285,20 +291,68 @@ pokemones.addEventListener("click",async()=>{
         // en lugar de la notación de punto. Aquí está cómo puedes hacerlo:
         `<form>
             <div>
-                <input type="range" value="${foundPokemon.hp}" name="hp"/>
-                <label data-name="hp">
+                <input type="range" value="${foundPokemon.hp}" name="${arrayPrueba[2]}"/>
+                <label data-name="${arrayPrueba[2]}">
                     <b>${foundPokemon.hp}</b>
-                    hp
+                    ${arrayPrueba[2]}
                 </label>
             </div>
         </form>`+
 
         `<form>
             <div>
-                <input type="range" value="${foundPokemon.attack}" name="attack"/>
-                <label data-name="attack">
+                <input type="range" value="${foundPokemon.attack}" name="${arrayPrueba[3]}"/>
+                <label data-name="${arrayPrueba[3]}">
                     <b>${foundPokemon.attack}</b>
-                    hp
+                    ${arrayPrueba[3]}
+                </label>
+            </div>
+        </form>`
+        
+        +
+
+        `<form>
+            <div>
+                <input type="range" value="${foundPokemon.defense}" name="${arrayPrueba[4]}"/>
+                <label data-name="${arrayPrueba[4]}">
+                    <b>${foundPokemon.defense}</b>
+                    ${arrayPrueba[4]}
+                </label>
+            </div>
+        </form>`
+        
+        +
+
+        `<form>
+            <div>
+                <input type="range" value="${foundPokemon["special-attack"]}" name="${arrayPrueba[5]}"/>
+                <label data-name="${arrayPrueba[5]}">
+                    <b>${foundPokemon["special-attack"]}</b>
+                    ${arrayPrueba[5]}
+                </label>
+            </div>
+        </form>`
+        
+        +
+
+        `<form>
+            <div>
+                <input type="range" value="${foundPokemon["special-defense"]}" name="${arrayPrueba[6]}"/>
+                <label data-name="${arrayPrueba[6]}">
+                    <b>${foundPokemon["special-defense"]}</b>
+                    ${arrayPrueba[6]}
+                </label>
+            </div>
+        </form>`
+        
+        +
+
+        `<form>
+            <div>
+                <input type="range" value="${foundPokemon.speed}" name="${arrayPrueba[7]}"/>
+                <label data-name="${arrayPrueba[7]}">
+                    <b>${foundPokemon.speed}</b>
+                    ${arrayPrueba[7]}
                 </label>
             </div>
         </form>`,
