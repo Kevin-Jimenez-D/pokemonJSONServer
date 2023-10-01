@@ -205,3 +205,49 @@ myPikachu.addEventListener("click", async()=>{
 
 
 })
+
+
+
+
+// Agrega un evento click al botón con id "buscarPokemon"
+//Primero verifica que exista el pokemon antes de que se pueda editar
+document.querySelector("#buscarPokemon").addEventListener("click", async () => {
+    // Obtén el nombre del Pokémon ingresado por el usuario, elimina espacios en blanco al inicio y final y coloca la palabra en minuscula
+    const pokemonName = document.querySelector("#nombrePokemon").value.trim().toLowerCase();
+
+    // Verifica si el Pokémon ya existe en la base de datos de MockAPI
+    const mockapiUrl = "https://6512485eb8c6ce52b3957baa.mockapi.io/pokemon";
+    const response = await fetch(mockapiUrl);
+    const pokemonData = await response.json();
+
+    // Busca el Pokémon en los datos de MockAPI, la vuelvo minuscula en la appi y miro si son iguales
+    const foundPokemon = pokemonData.find((pokemon) => pokemon.name.toLowerCase() === pokemonName);
+
+    if (foundPokemon) {
+        // Si se encuentra el Pokémon, habilita el botón "pokemones" y almacena su ID
+        document.querySelector("#pokemones").removeAttribute("disabled");
+        //Extraer su id
+        document.querySelector("#pokemones").dataset.pokemonId = foundPokemon.id;
+        Swal.fire("Éxito", `¡${foundPokemon.name} encontrado en la base de datos!`, "success");
+    } else {
+        // Si no se encuentra el Pokémon, muestra un mensaje de error
+        Swal.fire("Error", `No se encontró ningún Pokémon con el nombre "${pokemonName}" en la base de datos.`, "error");
+    }
+});
+
+
+
+
+
+/*
+//Es el boton donde saldrán los demas pokemones
+let pokemones= document.querySelector("#pokemones");
+
+pokemones.addEventListener("click",async()=>{
+    // Obtén la ID del Pokémon almacenada en el botón
+    //const pokemonId = document.querySelector("#pokemones").dataset.pokemonId;
+    const pokemonId = document.querySelector("#pokemones");
+
+    console.log(pokemonId);
+})
+*/
