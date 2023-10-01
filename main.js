@@ -239,15 +239,104 @@ document.querySelector("#buscarPokemon").addEventListener("click", async () => {
 
 
 
-/*
+
 //Es el boton donde saldrán los demas pokemones
 let pokemones= document.querySelector("#pokemones");
 
 pokemones.addEventListener("click",async()=>{
-    // Obtén la ID del Pokémon almacenada en el botón
-    //const pokemonId = document.querySelector("#pokemones").dataset.pokemonId;
-    const pokemonId = document.querySelector("#pokemones");
+    // Obtén el nombre del Pokémon ingresado por el usuario, elimina espacios en blanco al inicio y final y coloca la palabra en minuscula
+    const pokemonName = document.querySelector("#nombrePokemon").value.trim().toLowerCase();
 
-    console.log(pokemonId);
+    // Verifica si el Pokémon ya existe en la base de datos de JSON Server
+    const mockapiUrl = "http://localhost:3000/pokemonesJSONServer";
+    const response = await fetch(mockapiUrl);
+    const pokemonData = await response.json();
+
+    // Busca el Pokémon en los datos de MockAPI, la vuelvo minuscula en la appi y miro si son iguales
+    const foundPokemon = pokemonData.find((pokemon) => pokemon.name.toLowerCase() === pokemonName);
+
+    //Trae todo el objeto que se ve en el JSON Server
+    //console.log(foundPokemon);
+
+    if (foundPokemon) {
+    //De la pagina "https://pokeapi.co/" por defecto aparece pokemon y en /ditto se coloca pikachu
+    //Traiga la peticion, por ejemplo 202, lo convierte a JSON y traiga esos datos
+    //Son 1017 pokemons
+    //let res= await (await fetch("https://pokeapi.co/api/v2/pokemon/pikachu")).json();
+    //El objeto encontrado con el id del pokemon, solo me interesa el id para manipular la url
+    let res= await (await fetch(`https://pokeapi.co/api/v2/pokemon/${foundPokemon.id}`)).json();
+    //En la pagina "https://pokeapi.co/" se va al apartado sprites -> front_default -> la imagen del pokemon
+    let img= res.sprites.front_default;
+    //EN caso de alguna falla, me carga esta imagen sacada de la src de la imagen encontrada en Google
+    let defaultImg = "https://media.tenor.com/OPhGGLtFqLQAAAAC/pokeball.gif";
+
+    //console.log(resMockApi);
+
+    // lo del swal es lo de la página "https://sweetalert2.github.io/"
+    Swal.fire({
+        //Del objeto del data base en JSON solo obtengo ell nombre
+        title: `${foundPokemon.name}`,
+        text: 'Modal with a custom image.',
+        
+        //Donde aparece el ? es un condiciona, si la imagen aparece la coloca, sino coloca la de por default
+        imageUrl: `${(img) ? img:defaultImg}`,
+        html:
+        //Para acceder a propiedades con nombres que contienen guiones, debes utilizar la notación de corchetes
+        // en lugar de la notación de punto. Aquí está cómo puedes hacerlo:
+        `<form>
+            <div>
+                <input type="range" value="${foundPokemon.hp}" name="hp"/>
+                <label data-name="hp">
+                    <b>${foundPokemon.hp}</b>
+                    hp
+                </label>
+            </div>
+        </form>`+
+
+        `<form>
+            <div>
+                <input type="range" value="${foundPokemon.attack}" name="attack"/>
+                <label data-name="attack">
+                    <b>${foundPokemon.attack}</b>
+                    hp
+                </label>
+            </div>
+        </form>`,
+        //Imagenes al 80%
+        imageWidth: "80%",
+        imageHeight: "80%",
+      })
+        
+      //Esa id es la que selecciono en el HTML, cuando me alumbre el di que contiene la barrita de rango, el numero y la habilidad
+      let myContainer = document.querySelector("#swal2-html-container");
+      //Cuando detecte como un cambio en el input
+      myContainer.addEventListener("input", (e)=>{
+
+        //Cambia el elemento hermano, por eso el nextElementSibling
+        let myLabel=e.target.nextElementSibling;
+
+        //Es el valor de cambio al mover la barra
+        //console.log(e.target.value);
+
+        //Aparece la habilidad
+        //console.log(myLabel.dataset.name);
+
+        //Que se agregue al HTML su valor y a que caracteristica pertenen, vida, ataque, etc, esto son los valores que van cambiando
+        myLabel.innerHTML=`<b>${e.target.value}</b> ${myLabel.dataset.name}`
+
+        //console.log(res.id);                   //Guarda el id del pokemon
+        //console.log(res.name);               //Guarda el nombre
+        //console.log(myLabel.dataset.name);   //Guarda el nombre de la habilidad
+        //console.log(e.target.value);         //Guarda el valor de la habilidad como numerico
+
+        //let mockapi = "https://6512485eb8c6ce52b3957baa.mockapi.io/pokemon"
+
+    })
+
+    } else {
+        // Si no se encuentra el Pokémon, muestra un mensaje de error
+        //console.log("No encontrado")
+        Swal.fire("Error", `No se encontró ningún Pokémon con el nombre "${pokemonName}" en la base de datos.`, "error");
+    }
+
 })
-*/
