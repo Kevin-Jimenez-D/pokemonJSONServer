@@ -111,3 +111,7 @@ package-lock.json
 
 - Si se desea trabajar el proyecto, se debe clonar obviamente donde se desea trabajar o fichero deseado, en la terminal de Visual Studio Code con `git clone <url>` y luego de eso invocar el siguiente comando `npm i` en el lugar donde el fichero descargo todo de GitHub. Ya con eso se puede invocar el comando `npm run dev` para trabajar desde el repositorio clonado.
 
+![image](img/gitclone1.png)
+
+![image](img/gitclone2.png)
+
