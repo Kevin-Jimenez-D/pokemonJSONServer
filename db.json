@@ -4,12 +4,12 @@
     {
       "id": "1",
       "name": "bulbasaur",
-      "hp": 45,
+      "hp": 66,
       "attack": 49,
       "defense": 49,
       "special-attack": 65,
       "special-defense": 65,
-      "speed": 45
+      "speed": 66
     },
     {
       "id": "2",

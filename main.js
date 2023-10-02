@@ -302,9 +302,7 @@ pokemones.addEventListener("click",async()=>{
                     ${arrayPrueba[2]}
                 </label>
             </div>
-        </form>`+
 
-        `<form>
             <div>
                 <input type="range" value="${foundPokemon.attack}" name="${arrayPrueba[3]}"/>
                 <label data-name="${arrayPrueba[3]}">
@@ -312,11 +310,7 @@ pokemones.addEventListener("click",async()=>{
                     ${arrayPrueba[3]}
                 </label>
             </div>
-        </form>`
-        
-        +
 
-        `<form>
             <div>
                 <input type="range" value="${foundPokemon.defense}" name="${arrayPrueba[4]}"/>
                 <label data-name="${arrayPrueba[4]}">
@@ -324,11 +318,7 @@ pokemones.addEventListener("click",async()=>{
                     ${arrayPrueba[4]}
                 </label>
             </div>
-        </form>`
-        
-        +
 
-        `<form>
             <div>
                 <input type="range" value="${foundPokemon["special-attack"]}" name="${arrayPrueba[5]}"/>
                 <label data-name="${arrayPrueba[5]}">
@@ -336,11 +326,7 @@ pokemones.addEventListener("click",async()=>{
                     ${arrayPrueba[5]}
                 </label>
             </div>
-        </form>`
-        
-        +
 
-        `<form>
             <div>
                 <input type="range" value="${foundPokemon["special-defense"]}" name="${arrayPrueba[6]}"/>
                 <label data-name="${arrayPrueba[6]}">
@@ -348,11 +334,7 @@ pokemones.addEventListener("click",async()=>{
                     ${arrayPrueba[6]}
                 </label>
             </div>
-        </form>`
-        
-        +
 
-        `<form>
             <div>
                 <input type="range" value="${foundPokemon.speed}" name="${arrayPrueba[7]}"/>
                 <label data-name="${arrayPrueba[7]}">
@@ -402,12 +384,24 @@ pokemones.addEventListener("click",async()=>{
                     const form = document.querySelector("form");
                     const formData = new FormData(form);
 
-                    const hp = foundPokemon.hp;
-                    const attack = foundPokemon.attack;
-                    const defense = foundPokemon.defense;
-                    const specialAttack = foundPokemon["special-attack"];
-                    const specialDefense = foundPokemon["special-defense"];
-                    const speed = foundPokemon.speed;
+                    //const hp = foundPokemon.hp;
+                    //const attack = foundPokemon.attack;
+                    //const defense = foundPokemon.defense;
+                    //const specialAttack = foundPokemon["special-attack"];
+                    //const specialDefense = foundPokemon["special-defense"];
+                    //const speed = foundPokemon.speed;
+
+                    // Puedes acceder a los datos individualmente por su nombre (por ejemplo, "name")
+                    const name = formData.get("name");
+                    // Y también a las características, por ejemplo, "hp", "attack", "defense", etc.
+                    const hp = formData.get("hp");
+                    const attack = formData.get("attack");
+                    const defense = formData.get("defense");
+                    // ... y así sucesivamente para todas las características
+
+                    const specialAttack = formData.get("special-attack");
+                    const specialDefense = formData.get("special-defense");
+                    const speed = formData.get("speed");
 
                     //const hp = e.target.value;
                     //const attack = e.target.value;
@@ -417,15 +411,15 @@ pokemones.addEventListener("click",async()=>{
                     //const speed = e.target.value;
                 
                     // Luego puedes hacer lo que quieras con estos datos, como mostrarlos en la consola o enviarlos a través de una solicitud AJAX a otro lugar.
-                    console.log("ID del pokemon:",foundPokemon.id);                   
-                    console.log("Nombre del Pokémon:", foundPokemon.name);
-                    console.log("Puntos de Salud (HP):", foundPokemon.hp);
-                    console.log("Puntos de Ataque:", foundPokemon.attack);
-                    console.log("Puntos de Defensa:", foundPokemon.defense);
+                    //console.log("ID del pokemon:",foundPokemon.id);                   
+                    //console.log("Nombre del Pokémon:", foundPokemon.name);
+                    //console.log("Puntos de Salud (HP):", foundPokemon.hp);
+                    //console.log("Puntos de Ataque:", foundPokemon.attack);
+                    //console.log("Puntos de Defensa:", foundPokemon.defense);
                     
-                    console.log("specialAttack", specialAttack);
-                    console.log("specialDefense", specialDefense);
-                    console.log("speed", foundPokemon.speed);
+                    //console.log("specialAttack", specialAttack);
+                    //console.log("specialDefense", specialDefense);
+                    //console.log("speed", foundPokemon.speed);
                 
                     // Aquí puedes continuar con cualquier otra acción que desees realizar con los datos.
     
@@ -446,16 +440,64 @@ pokemones.addEventListener("click",async()=>{
                     const updatedData = {
                         id:foundPokemon.id,
                         name:foundPokemon.name,
-                        hp: hp,
-                        attack: attack,
-                        defense: defense,
+                        hp: parseFloat(hp),
+                        attack: parseFloat(attack),
+                        defense: parseFloat(defense),
                         "special-attack": parseFloat(specialAttack),
                         "special-defense": parseFloat(specialDefense),
-                        speed: speed
+                        speed: parseFloat(speed)
                     };
     
                     //console.log(updatedData);
-                    
+                    // Verifica si hay una ID de Pokémon seleccionada, importante porque deseo editar
+                if (pokemonId) {
+                    // Si hay una ID seleccionada, actualiza el Pokémon existente en la API MockAPI
+                    const mockapiUrl = `http://localhost:3000/pokemonesJSONServer/${pokemonId}`;
+                    const requestOptions = {
+                        method: "PUT", // Usa PUT para actualizar
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(updatedData),
+                    };
+
+                    try {
+                        // Envía la solicitud PUT para actualizar el Pokémon
+                        const response = await fetch(mockapiUrl, requestOptions);
+                        console.log(response);
+
+                        if (response.ok) {
+                            Swal.fire("Éxito", "Datos actualizados correctamente en MockAPI", "success");
+                        } else {
+                            Swal.fire("Error", "Error al actualizar los datos en MockAPI", "error");
+                        }
+                    } catch (error) {
+                        Swal.fire("Error", "Error al actualizar los datos en MockAPI", "error");
+                    }
+                } else {
+                    // Si no hay una ID seleccionada, crea un nuevo Pokémon en la API MockAPI
+                    const mockapiUrl = "http://localhost:3000/pokemonesJSONServer";
+                    const requestOptions = {
+                        method: "POST", // Usa POST para crear un nuevo Pokémon
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(updatedData),
+                    };
+
+                    try {
+                        // Envía la solicitud POST para crear un nuevo Pokémon
+                        const response = await fetch(mockapiUrl, requestOptions);
+
+                        if (response.ok) {
+                            Swal.fire("Éxito", "Nuevo Pokémon creado en MockAPI", "success");
+                        } else {
+                            Swal.fire("Error", "Error al crear un nuevo Pokémon en MockAPI", "error");
+                        }
+                    } catch (error) {
+                        Swal.fire("Error", "Error al crear un nuevo Pokémon en MockAPI", "error");
+                    }
+                }
     
                     pokemones.disabled=true;   //Desabilita luego de enviar para que no me edite nombres de pokemones que no encuentre
         })
