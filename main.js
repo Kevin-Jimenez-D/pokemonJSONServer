@@ -244,6 +244,9 @@ document.querySelector("#buscarPokemon").addEventListener("click", async () => {
 let pokemones= document.querySelector("#pokemones");
 
 pokemones.addEventListener("click",async()=>{
+    // Obtén la ID del Pokémon almacenada en el botón
+    const pokemonId = document.querySelector("#pokemones").dataset.pokemonId;
+
     // Obtén el nombre del Pokémon ingresado por el usuario, elimina espacios en blanco al inicio y final y coloca la palabra en minuscula
     const pokemonName = document.querySelector("#nombrePokemon").value.trim().toLowerCase();
 
@@ -252,11 +255,13 @@ pokemones.addEventListener("click",async()=>{
     const response = await fetch(mockapiUrl);
     const pokemonData = await response.json();
 
+    //console.log(pokemonData);
+
     // Busca el Pokémon en los datos de MockAPI, la vuelvo minuscula en la appi y miro si son iguales
     const foundPokemon = pokemonData.find((pokemon) => pokemon.name.toLowerCase() === pokemonName);
 
     //Trae todo el objeto que se ve en el JSON Server
-    //console.log(foundPokemon);
+    console.log(foundPokemon);
 
     //Con esto obtengo las llaves de todos mis elementos para colocarlos dinamicamente
     const arrayPrueba=Object.keys(foundPokemon)
@@ -355,6 +360,7 @@ pokemones.addEventListener("click",async()=>{
                     ${arrayPrueba[7]}
                 </label>
             </div>
+            <input id="enviarJSON" type="submit" value="Enviar"/>
         </form>`,
         //Imagenes al 80%
         imageWidth: "80%",
@@ -363,6 +369,7 @@ pokemones.addEventListener("click",async()=>{
         
       //Esa id es la que selecciono en el HTML, cuando me alumbre el di que contiene la barrita de rango, el numero y la habilidad
       let myContainer = document.querySelector("#swal2-html-container");
+
       //Cuando detecte como un cambio en el input
       myContainer.addEventListener("input", (e)=>{
 
@@ -385,7 +392,77 @@ pokemones.addEventListener("click",async()=>{
 
         //let mockapi = "https://6512485eb8c6ce52b3957baa.mockapi.io/pokemon"
 
+        document.querySelector("#enviarJSON").addEventListener("click",async (event) =>{
+            // Obtén la ID del Pokémon almacenada en el botón
+                    //const pokemonId = document.querySelector("#pokemones").dataset.pokemonId;
+                    // Evita que el formulario se envíe de forma predeterminada
+                    event.preventDefault();
+                
+                    // Accede al formulario y crea un nuevo objeto FormData a partir de él
+                    const form = document.querySelector("form");
+                    const formData = new FormData(form);
+
+                    const hp = foundPokemon.hp;
+                    const attack = foundPokemon.attack;
+                    const defense = foundPokemon.defense;
+                    const specialAttack = foundPokemon["special-attack"];
+                    const specialDefense = foundPokemon["special-defense"];
+                    const speed = foundPokemon.speed;
+
+                    //const hp = e.target.value;
+                    //const attack = e.target.value;
+                    //const defense = e.target.value;
+                    //const specialAttack = e.target.value;
+                    //const specialDefense = e.target.value;
+                    //const speed = e.target.value;
+                
+                    // Luego puedes hacer lo que quieras con estos datos, como mostrarlos en la consola o enviarlos a través de una solicitud AJAX a otro lugar.
+                    console.log("ID del pokemon:",foundPokemon.id);                   
+                    console.log("Nombre del Pokémon:", foundPokemon.name);
+                    console.log("Puntos de Salud (HP):", foundPokemon.hp);
+                    console.log("Puntos de Ataque:", foundPokemon.attack);
+                    console.log("Puntos de Defensa:", foundPokemon.defense);
+                    
+                    console.log("specialAttack", specialAttack);
+                    console.log("specialDefense", specialDefense);
+                    console.log("speed", foundPokemon.speed);
+                
+                    // Aquí puedes continuar con cualquier otra acción que desees realizar con los datos.
+    
+                    const JSONServer = "http://localhost:3000/pokemonesJSONServer";
+    
+                    // Realiza una solicitud GET para obtener todos los Pokémon desde JSON Server
+                    const response = await fetch(JSONServer);
+                    //Para entrar internamente a los datos de JSONServer
+                    const pokemonData = await response.json();
+    
+                    //Es uno menos que la id de pokeapi
+                    //console.log(pokemonData[parseInt(foundPokemon.id)-1]);
+    
+    
+                    // Ahora puedes crear un objeto que contenga todos los datos que deseas enviar a la API MockAPI
+                    //id: String(res.id),
+                    //OJo con los apartados de la izquierda : para no envíe datos falsos
+                    const updatedData = {
+                        id:foundPokemon.id,
+                        name:foundPokemon.name,
+                        hp: hp,
+                        attack: attack,
+                        defense: defense,
+                        "special-attack": parseFloat(specialAttack),
+                        "special-defense": parseFloat(specialDefense),
+                        speed: speed
+                    };
+    
+                    //console.log(updatedData);
+                    
+    
+                    pokemones.disabled=true;   //Desabilita luego de enviar para que no me edite nombres de pokemones que no encuentre
+        })
     })
+
+
+    
 
     } else {
         // Si no se encuentra el Pokémon, muestra un mensaje de error
