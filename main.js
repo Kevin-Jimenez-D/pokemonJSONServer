@@ -24,6 +24,8 @@ traerMockApi();
 
 //Enviar los datos de pokeapi a JSONServer
 //OJO, esto solo se debe hacer una vez sino se genera errores, por eso lo desabilito
+//Por alguna razón envía pocos datos cuando se presiona una sola vez, pero si se presiona varias veces
+//Si envía todos los datos, no importa si salen errores
 let pokeapiMockapi = document.querySelector("#pokeapiMockapi");
 
 pokeapiMockapi.addEventListener("click",async()=>
