@@ -10,26 +10,6 @@
       "special-attack": 65,
       "special-defense": 65,
       "speed": 66
-    },
-    {
-      "id": "2",
-      "name": "ivysaur",
-      "hp": 60,
-      "attack": 62,
-      "defense": 63,
-      "special-attack": 80,
-      "special-defense": 80,
-      "speed": 60
-    },
-    {
-      "id": "3",
-      "name": "venusaur",
-      "hp": 80,
-      "attack": 82,
-      "defense": 83,
-      "special-attack": 100,
-      "special-defense": 100,
-      "speed": 80
     }
   ],
   "pokemones": []

@@ -513,3 +513,44 @@ pokemones.addEventListener("click",async()=>{
     }
 
 })
+
+
+//Para eliminar los datos
+document.querySelector("#eliminarPokemon").addEventListener("click", async () => {
+    // Obtén el nombre del Pokémon ingresado por el usuario
+    const pokemonNameToDelete = document.querySelector("#eliminarNombrePokemon").value.trim().toLowerCase();
+
+    // URL de la API MockAPI
+    const mockapiUrl = "http://localhost:3000/pokemonesJSONServer";
+
+    try {
+        // Realiza una solicitud GET para obtener todos los Pokémon de la base de datos MockAPI
+        const response = await fetch(mockapiUrl);
+        const pokemonData = await response.json();
+
+        // Busca el Pokémon en los datos de MockAPI
+        const foundPokemon = pokemonData.find((pokemon) => pokemon.name.toLowerCase() === pokemonNameToDelete);
+
+        if (foundPokemon) {
+            // Si se encuentra el Pokémon, obtén su ID
+            const pokemonIdToDelete = foundPokemon.id;
+
+            // URL para eliminar el Pokémon por ID
+            const deleteUrl = `${mockapiUrl}/${pokemonIdToDelete}`;
+
+            // Realiza una solicitud DELETE para eliminar el Pokémon de la base de datos
+            const deleteResponse = await fetch(deleteUrl, { method: "DELETE" });
+
+            if (deleteResponse.ok) {
+                Swal.fire("Éxito", `El Pokémon ${foundPokemon.name} ha sido eliminado de la base de datos.`, "success");
+            } else {
+                Swal.fire("Error", "Error al eliminar el Pokémon de la base de datos.", "error");
+            }
+        } else {
+            // Si no se encuentra el Pokémon, muestra un mensaje de error
+            Swal.fire("Error", `El Pokémon con nombre "${pokemonNameToDelete}" no existe en la base de datos.`, "error");
+        }
+    } catch (error) {
+        Swal.fire("Error", "Error al procesar la solicitud.", "error");
+    }
+});
