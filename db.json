@@ -12,16 +12,6 @@
       "speed": 45
     },
     {
-      "id": "2",
-      "name": "ivysaur",
-      "hp": 60,
-      "attack": 62,
-      "defense": 63,
-      "special-attack": 80,
-      "special-defense": 80,
-      "speed": 60
-    },
-    {
       "id": "3",
       "name": "venusaur",
       "hp": 80,
@@ -90,16 +80,6 @@
       "special-attack": 85,
       "special-defense": 105,
       "speed": 78
-    },
-    {
-      "id": "10",
-      "name": "caterpie",
-      "hp": 45,
-      "attack": 30,
-      "defense": 35,
-      "special-attack": 20,
-      "special-defense": 20,
-      "speed": 45
     }
   ],
   "pokemones": []
